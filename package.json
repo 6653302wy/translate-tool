@@ -1,0 +1,24 @@
+{
+  "name": "translate-tool",
+  "version": "1.0.8",
+  "description": "a tranlate tool use in cli",
+  "main": "index.js",
+  "bin": {
+    "fy": "./index.js"
+  },
+  "scripts": {
+    "p": "npm version patch",
+    "publish": "npm publish"
+  },
+  "author": "wanpp",
+  "license": "ISC",
+  "keywords": [
+    "命令行",
+    "翻译"
+  ],
+  "dependencies": {
+    "axios": "^1.4.0",
+    "sha256": "^0.2.0",
+    "utf8": "^3.0.0"
+  }
+}
