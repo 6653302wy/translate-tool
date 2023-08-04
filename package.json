@@ -20,5 +20,9 @@
     "axios": "^1.4.0",
     "sha256": "^0.2.0",
     "utf8": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/6653302wy/translate-tool.git"
   }
 }
