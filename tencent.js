@@ -8,8 +8,8 @@ const TmtClient = tencentcloud.tmt.v20180321.Client;
 // 密钥可前往官网控制台 https://console.cloud.tencent.com/cam/capi 进行获取
 const clientConfig = {
   credential: {
-    secretId: "AKIDLYaQ2PVP6Zoogu3ylMm5BMUcgXCh1V7h",
-    secretKey: "hMxTq1xeAVs9D810xljjYDj4FrHgCaoz",
+    secretId: process.env.ID,
+    secretKey: process.env.KEY,
   },
   region: "ap-shanghai",
   profile: {
@@ -29,6 +29,8 @@ const params = {
 };
 
 const tencnet = (text, source, target) => {
+  console.log("sssss", process.env.ID, process.env.KEY);
+
   return new Promise((resolve) => {
     client
       .TextTranslate({
@@ -50,6 +52,6 @@ const tencnet = (text, source, target) => {
 };
 
 // 测试用
-// tencnet();
+tencnet();
 
 module.exports = tencnet;
