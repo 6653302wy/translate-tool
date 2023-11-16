@@ -4,16 +4,16 @@ const sha256 = require("sha256");
 const utf8 = require("utf8");
 const tencnet = require("./tencent");
 
-const cmdargs = process.argv;
-// const cmdargs = [
-//   "",
-//   "",
-//   "无法识别要翻译的内容，请重新输入",
-//   // "-f",
-//   // "en",
-//   // "-t",
-//   // "zh",
-// ];
+// const cmdargs = process.argv;
+const cmdargs = [
+  "",
+  "",
+  "book",
+  // "-f",
+  // "en",
+  // "-t",
+  // "zh",
+];
 // console.log("cmdargs: ",  cmdargs);
 let query = cmdargs?.[2] ?? ""; // 获取命令行参数
 if (!query) {

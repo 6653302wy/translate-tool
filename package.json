@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "axios": "^1.4.0",
+    "dotenv": "^16.3.1",
     "sha256": "^0.2.0",
     "tencentcloud-sdk-nodejs-tmt": "^4.0.735",
     "utf8": "^3.0.0"
