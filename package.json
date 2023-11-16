@@ -7,8 +7,7 @@
     "fy": "./index.js"
   },
   "scripts": {
-    "p": "npm version patch",
-    "publish": "npm publish"
+    "p": "git add . && git commit -m 'publish package' && npm version patch && npm publish"
   },
   "author": "wanpp",
   "license": "ISC",
@@ -18,10 +17,8 @@
   ],
   "dependencies": {
     "axios": "^1.4.0",
-    "dotenv": "^16.3.1",
-    "sha256": "^0.2.0",
-    "tencentcloud-sdk-nodejs-tmt": "^4.0.735",
-    "utf8": "^3.0.0"
+    "js-base64": "^3.7.5",
+    "tencentcloud-sdk-nodejs-tmt": "^4.0.735"
   },
   "repository": {
     "type": "git",

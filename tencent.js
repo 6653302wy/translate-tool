@@ -3,6 +3,7 @@ const tencentcloud = require("tencentcloud-sdk-nodejs-tmt");
 
 const TmtClient = tencentcloud.tmt.v20180321.Client;
 
+const { Base64 } = require("js-base64");
 const keys = require("./key.json");
 
 // 实例化一个认证对象，入参需要传入腾讯云账户 SecretId 和 SecretKey，此处还需注意密钥对的保密
@@ -10,8 +11,8 @@ const keys = require("./key.json");
 // 密钥可前往官网控制台 https://console.cloud.tencent.com/cam/capi 进行获取
 const clientConfig = {
   credential: {
-    secretId: keys.id,
-    secretKey: keys.key,
+    secretId: Base64.atob(keys.id),
+    secretKey: Base64.atob(keys.key),
   },
   region: "ap-shanghai",
   profile: {
