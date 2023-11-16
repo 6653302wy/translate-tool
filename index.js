@@ -1,14 +1,12 @@
 #! /usr/bin/env node
 const axios = require("axios");
-const sha256 = require("sha256");
-const utf8 = require("utf8");
 const tencnet = require("./tencent");
 
 const cmdargs = process.argv;
 // const cmdargs = [
 //   "",
 //   "",
-//   "book",
+//   "参数",
 //   // "-f",
 //   // "en",
 //   // "-t",
