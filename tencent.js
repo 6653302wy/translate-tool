@@ -31,25 +31,23 @@ const params = {
   ProjectId: 0,
 };
 
-const tencnet = (text, source, target) => {
-  return new Promise((resolve) => {
-    client
-      .TextTranslate({
-        ...params,
-        SourceText: text,
-        Source: source,
-        Target: target,
-      })
-      .then(
-        (data) => {
-          //   console.log(data);
-          resolve(data?.TargetText || "");
-        },
-        (err) => {
-          console.error("error", err);
-        }
-      );
-  });
+const tencnet = (text, from, to) => {
+  client
+    .TextTranslate({
+      ...params,
+      SourceText: text,
+      Source: from,
+      Target: to,
+    })
+    .then(
+      (data) => {
+        //   console.log(data);
+        console.log(data?.TargetText || "");
+      },
+      (err) => {
+        // console.error("error", err);
+      }
+    );
 };
 
 // 测试用

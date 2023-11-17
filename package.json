@@ -4,7 +4,8 @@
   "description": "a tranlate tool use in cli",
   "main": "index.js",
   "bin": {
-    "fy": "./index.js"
+    "fy": "./index.js",
+    "dict": "./index.js"
   },
   "scripts": {
     "p": "git add . && git commit -m 'publish package' && npm version patch && npm publish"
@@ -18,6 +19,7 @@
   "dependencies": {
     "axios": "^1.4.0",
     "js-base64": "^3.7.5",
+    "md5": "^2.3.0",
     "tencentcloud-sdk-nodejs-tmt": "^4.0.735"
   },
   "repository": {

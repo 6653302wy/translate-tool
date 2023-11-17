@@ -1,41 +1,28 @@
 #! /usr/bin/env node
-const axios = require("axios");
 const tencnet = require("./tencent");
+const baidu = require("./baidu");
 
-const cmdargs = process.argv;
-// const cmdargs = [
-//   "",
-//   "",
-//   "参数",
-//   // "-f",
-//   // "en",
-//   // "-t",
-//   // "zh",
-// ];
-// console.log("cmdargs: ",  cmdargs);
-let query = cmdargs?.[2] ?? ""; // 获取命令行参数
+const index = 1;
+const cmdargs =
+  //process.argv;
+  [
+    "",
+    "",
+    "dict",
+    "书",
+    // "-f",
+    // "en",
+    // "-t",
+    // "zh",
+  ];
+const cmd = cmdargs[index + 1]; // 'fy' | 'dict'
+console.log("cmdargs: ", cmdargs);
+let query = cmdargs?.[index + 2] ?? ""; // 获取命令行参数
 if (!query) {
   console.log("warning: 无法识别要翻译的内容，请重新输入");
   return;
 }
 if (query.length > 2000) query = query.slice(0, 2000); // 不能超xx个字符
-
-// const showResult = (data) => {
-//   let result = "\n" + data.query + ": " + data.translation.join(",");
-//   if (data?.basic) {
-//     result += "\n" + data.basic.explains.join("\n");
-//   }
-//   if (data?.web) {
-//     result += "\n\n" + "网络释义: ";
-//     let webStr = "";
-//     data.web.forEach((item) => {
-//       webStr += "\n" + `${item.key}: ${item.value.join(",")}`;
-//     });
-//     result += webStr;
-//   }
-
-//   console.log(result);
-// };
 
 const iszh = (str) => {
   return /[\u4e00-\u9fa5|\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/.test(
@@ -48,16 +35,16 @@ const checkLan = () => {
   const querySource = iszh(query) ? "zh" : "en";
 
   let from = querySource;
-  const hasfromkey = cmdargs.indexOf("-f");
-  if (hasfromkey !== -1) {
-    const fromlan = cmdargs?.[hasfromkey + 1];
+  const fromIndex = cmdargs.indexOf("-f");
+  if (fromIndex !== -1) {
+    const fromlan = cmdargs?.[fromIndex + 1];
     from = fromlan ? fromlan : "auto";
   }
 
   let to = querySource === "zh" ? "en" : "zh";
-  const hastokey = cmdargs.indexOf("-t");
-  if (hastokey !== -1) {
-    const tolan = cmdargs?.[hastokey + 1];
+  const toIndex = cmdargs.indexOf("-t");
+  if (toIndex !== -1) {
+    const tolan = cmdargs?.[toIndex + 1];
     to = tolan ? tolan : to;
   }
 
@@ -85,39 +72,13 @@ const getTranslateStr = () => {
 
   const { from, to } = checkLan();
 
-  // 腾讯api
-  tencnet(query, from, to).then((result) => {
-    console.log(result);
-  });
-  // 腾讯api
-  // axios
-  //   .post(
-  //     url,
-  //     {
-  //       Action: "TextTranslate",
-  //       Version: "2018-03-21",
-  //       Region: "ap-shanghai",
-  //       SourceText: query,
-  //       Source: from,
-  //       Target: to,
-  //       ProjectId: 0,
-  //     }
-  //     // {
-  //     //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //     // }
-  //   )
-  //   .then(function (response) {
-  //     const data = response.data;
-  //     if (data?.errorCode !== "0") {
-  //       console.log("error", response);
-  //     } else {
-  //       // console.log("response: ", data);
-  //       showResult(data);
-  //     }
-  //   })
-  //   .catch(function (error) {
-  //     console.log("error==: " + error);
-  //   });
+  if (cmd === "fy") {
+    // 腾讯翻译
+    tencnet(query, from, to);
+  } else if (cmd === "dict") {
+    // 百度词典
+    baidu(query, from, to);
+  }
 };
 
 getTranslateStr();
