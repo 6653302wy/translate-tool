@@ -1,6 +1,6 @@
 {
   "name": "translate-tool",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "a tranlate tool use in cli",
   "main": "index.js",
   "bin": {
