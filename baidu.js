@@ -39,7 +39,7 @@ const showResult = (result) => {
   const dictMeans = dict.word_result.simple_means.symbols[0];
 
   let trans = dictMeans?.ph_en
-    ? `英/${dictMeans?.ph_en}/ 美/${dictMeans?.ph_am}/` + "\n\n"
+    ? `英/${dictMeans?.ph_en}/     美/${dictMeans?.ph_am}/` + "\n\n"
     : "";
   if (dictMeans.parts.length) {
     dictMeans.parts.forEach((item) => {
