@@ -7,19 +7,11 @@ const baidu = require("./baidu");
 
 const cmdIndex = 0; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
-// [
-//   "",
-//   "/Users/wanpp/.nvm/versions/node/v18.16.1/bin/dict",
-//   "a style of calligraphy ",
-//   // "-f",
-//   // "en",
-//   // "-t",
-//   // "zh",
-// ];
+
 const binstr = cmdargs[cmdIndex + 1];
 const cmd =
   cmdIndex === 0 ? binstr.substring(binstr.lastIndexOf("/") + 1) : binstr; // 'fy' | 'dict'
-console.log("cmdargs: ", cmdargs);
+// console.log("cmdargs: ", cmdargs);
 
 const iszh = (str) => {
   return /[\u4e00-\u9fa5|\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/.test(
@@ -30,13 +22,14 @@ const iszh = (str) => {
 const getInputQuery = () => {
   let queryStart = cmdIndex + 2;
   // 翻译命令下，检查是否有 -f -t 等参数
-  let paramIndex =
-    cmd === "fy" ? cmdargs.indexOf("-f") || cmdargs.indexOf("-t") : -1;
+  let paramIndex = cmdargs.indexOf("-f") || cmdargs.indexOf("-t");
 
   let query =
-    paramIndex !== -1
-      ? cmdargs?.slice(queryStart, paramIndex).join(" ")
-      : cmdargs?.[queryStart] ?? ""; // 获取命令行参数
+    cmd === "fy"
+      ? paramIndex !== -1
+        ? cmdargs?.slice(queryStart, paramIndex).join(" ")
+        : cmdargs?.slice(queryStart).join(" ") ?? ""
+      : cmdargs?.[queryStart]; // 词典只支持查询单词
 
   if (!query) return "";
 
@@ -71,7 +64,7 @@ const getTranslateStr = () => {
     return;
   }
 
-  console.log("query: ", query);
+  // console.log("query: ", query);
   // query = utf8.decode(query);
   // const curtime = Math.round(new Date().getTime() / 1000);
   // const salt = new Date().getTime();
@@ -92,7 +85,7 @@ const getTranslateStr = () => {
 
   if (cmd === "fy") {
     // 腾讯翻译
-    tencnet(query, from, to);
+    tencnet(query, "auto", to);
   } else if (cmd === "dict") {
     // 百度词典
     baidu(query, from, to);

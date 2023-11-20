@@ -19,12 +19,10 @@ const getToken = () => {
   return new Promise((resolve, reject) => {
     axios(options)
       .then((res) => {
-        // console.log("res.data: ", res.data);
         resolve(res.data?.access_token || "");
       })
       .catch((err) => {
         // console.log("token accessed err: ", err);
-        // reject(err);
       });
   });
 };
@@ -48,7 +46,6 @@ const showResult = (result) => {
       } else {
         // 源语言为中文
         item?.means?.forEach((mean) => {
-          //   console.log("dictMeans: ", mean);
           if (mean?.means?.length) {
             trans +=
               `${mean.text} ${mean.part} ${mean.means.join("; ")}` + "\n";
