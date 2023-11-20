@@ -5,7 +5,7 @@
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
 
-const cmdIndex = 0; // 本地测试为1， 线上为0
+const cmdIndex = 1; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
 
 const binstr = cmdargs[cmdIndex + 1];
@@ -22,7 +22,7 @@ const iszh = (str) => {
 const getInputQuery = () => {
   let queryStart = cmdIndex + 2;
   // 翻译命令下，检查是否有 -f -t 等参数
-  let paramIndex = cmdargs.indexOf("-f") || cmdargs.indexOf("-t");
+  let paramIndex = cmdargs.indexOf("-t");
 
   let query =
     cmd === "fy"
@@ -41,11 +41,11 @@ const checkLan = (str) => {
   const querySource = iszh(str) ? "zh" : "en";
 
   let from = querySource;
-  const fromIndex = cmdargs.indexOf("-f");
-  if (fromIndex !== -1) {
-    const fromlan = cmdargs?.[fromIndex + 1];
-    from = fromlan ? fromlan : "auto";
-  }
+  // const fromIndex = cmdargs.indexOf("-f");
+  // if (fromIndex !== -1) {
+  //   const fromlan = cmdargs?.[fromIndex + 1];
+  //   from = fromlan ? fromlan : "auto";
+  // }
 
   let to = querySource === "zh" ? "en" : "zh";
   const toIndex = cmdargs.indexOf("-t");
@@ -63,8 +63,8 @@ const getTranslateStr = () => {
     console.log("warning: 无法识别要翻译的内容，请重新输入");
     return;
   }
-
   // console.log("query: ", query);
+
   // query = utf8.decode(query);
   // const curtime = Math.round(new Date().getTime() / 1000);
   // const salt = new Date().getTime();
