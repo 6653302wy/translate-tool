@@ -30,29 +30,35 @@ const getToken = () => {
 };
 
 const showResult = (result) => {
-  console.log("showResult ========: ", result?.dict);
+  //   console.log("showResult ========: ", result?.dict);
   if (!result?.dict) result;
 
   const dict = JSON.parse(result.dict);
-  //   console.log(
-  //     "dict===: ",
-  //     // dict,
-  //     dict.word_result
-  //     // dict.simple_means,
-  //     // dict.symbols.parts
-  //   );
+  const isEn = dict.lang === "1"; // 0 中文， 1 英文 ，不同的值，返回的数据结构也不同
 
-  const yinbiao = dict.word_result.simple_means.symbols[0];
+  const dictMeans = dict.word_result.simple_means.symbols[0];
 
-  let trans = `英/${yinbiao?.ph_en}/ 美/${yinbiao?.ph_am}/` + "\n\n";
-  if (yinbiao.parts.length) {
-    yinbiao.parts.forEach((item) => {
-      console.log("yinbiao: ", item);
-      trans += `${item.part} ${item.means.join("")}` + "\n";
+  let trans = isEn
+    ? `英/${dictMeans?.ph_en}/ 美/${dictMeans?.ph_am}/` + "\n\n"
+    : "";
+  if (dictMeans.parts.length) {
+    dictMeans.parts.forEach((item) => {
+      if (isEn) {
+        trans += `${item.part} ${item.means.join("; ")}` + "\n";
+      } else {
+        // 源语言为中文
+        item?.means?.forEach((mean) => {
+          //   console.log("dictMeans: ", mean);
+          if (mean?.means?.length) {
+            trans +=
+              `${mean.text} ${mean.part} ${mean.means.join("; ")}` + "\n";
+          }
+        });
+      }
     });
   }
 
-  const exchange = dict.word_result.simple_means.exchange;
+  const exchange = dict.word_result.simple_means?.exchange;
   if (exchange) {
     trans +=
       "\n" +
@@ -75,7 +81,6 @@ const baidu = async (text, from, to) => {
   let token = await getToken();
   if (!token) return;
 
-  console.log("baidu: ", text, from, to);
   axios({
     method: "POST",
     url:
@@ -94,7 +99,7 @@ const baidu = async (text, from, to) => {
     .then(function (res) {
       const data = res.data;
       if (data?.error_code) {
-        console.log("baidu dict err: ", data);
+        console.log(" dict err: ", data);
       } else {
         showResult(data?.result?.trans_result?.[0]);
       }

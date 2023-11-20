@@ -2,32 +2,40 @@
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
 
-const index = 1;
-const cmdargs =
-  //process.argv;
-  [
-    "",
-    "",
-    "dict",
-    "书",
-    // "-f",
-    // "en",
-    // "-t",
-    // "zh",
-  ];
-const cmd = cmdargs[index + 1]; // 'fy' | 'dict'
-console.log("cmdargs: ", cmdargs);
-let query = cmdargs?.[index + 2] ?? ""; // 获取命令行参数
-if (!query) {
-  console.log("warning: 无法识别要翻译的内容，请重新输入");
-  return;
-}
-if (query.length > 2000) query = query.slice(0, 2000); // 不能超xx个字符
+const cmdargs = process.argv;
+// [
+//   "",
+//   "fy",
+//   "a style of calligraphy ",
+//   // "-f",
+//   // "en",
+//   // "-t",
+//   // "zh",
+// ];
+const cmd = cmdargs[1]; // 'fy' | 'dict'
+// console.log("cmdargs: ", cmdargs);
+let query = "";
 
 const iszh = (str) => {
   return /[\u4e00-\u9fa5|\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/.test(
     str
   );
+};
+
+const getInputQuery = () => {
+  let queryStart = 2;
+  // 翻译命令下，检查是否有 -f -t 等参数
+  let paramIndex =
+    cmd === "fy" ? cmdargs.indexOf("-f") || cmdargs.indexOf("-t") : -1;
+  query =
+    paramIndex !== -1
+      ? cmdargs?.slice(queryStart, paramIndex).join(" ")
+      : cmdargs?.[queryStart] ?? ""; // 获取命令行参数
+  if (!query) {
+    console.log("warning: 无法识别要翻译的内容，请重新输入");
+    return;
+  }
+  if (query.length > 2000) query = query.slice(0, 2000); // 不能超xx个字符
 };
 
 const checkLan = () => {
@@ -52,6 +60,7 @@ const checkLan = () => {
 };
 
 const getTranslateStr = () => {
+  getInputQuery();
   if (!query) return;
 
   // query = utf8.decode(query);
