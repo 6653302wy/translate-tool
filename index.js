@@ -1,4 +1,7 @@
 #! /usr/bin/env node
+
+// 👆使用 node 进行脚本的解释程序
+
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
 
@@ -6,15 +9,17 @@ const cmdIndex = 0; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
 // [
 //   "",
-//   "fy",
+//   "/Users/wanpp/.nvm/versions/node/v18.16.1/bin/dict",
 //   "a style of calligraphy ",
 //   // "-f",
 //   // "en",
 //   // "-t",
 //   // "zh",
 // ];
-const cmd = cmdargs[cmdIndex + 1]; // 'fy' | 'dict'
-console.log("cmdargs: ", cmdargs);
+const binstr = cmdargs[cmdIndex + 1];
+const cmd =
+  cmdIndex === 0 ? binstr.substring(binstr.lastIndexOf("/") + 1) : binstr; // 'fy' | 'dict'
+// console.log("cmdargs: ", cmdargs, cmd);
 
 const iszh = (str) => {
   return /[\u4e00-\u9fa5|\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/.test(
@@ -27,16 +32,15 @@ const getInputQuery = () => {
   // 翻译命令下，检查是否有 -f -t 等参数
   let paramIndex =
     cmd === "fy" ? cmdargs.indexOf("-f") || cmdargs.indexOf("-t") : -1;
+
   let query =
     paramIndex !== -1
       ? cmdargs?.slice(queryStart, paramIndex).join(" ")
       : cmdargs?.[queryStart] ?? ""; // 获取命令行参数
-  if (!query) {
-    console.log("warning: 无法识别要翻译的内容，请重新输入");
-    return;
-  }
-  console.log("query: ", query, queryStart);
-  if (query.length > 2000) query = query.slice(0, 2000); // 不能超xx个字符
+
+  if (!query) return "";
+
+  return query.length > 2000 ? query.slice(0, 2000) : query; // 不能超xx个字符
 };
 
 const checkLan = (str) => {
@@ -62,7 +66,10 @@ const checkLan = (str) => {
 
 const getTranslateStr = () => {
   const query = getInputQuery();
-  if (!query) return;
+  if (!query) {
+    console.log("warning: 无法识别要翻译的内容，请重新输入");
+    return;
+  }
 
   // query = utf8.decode(query);
   // const curtime = Math.round(new Date().getTime() / 1000);
@@ -84,11 +91,9 @@ const getTranslateStr = () => {
 
   if (cmd === "fy") {
     // 腾讯翻译
-    console.log("tencnet fy");
     tencnet(query, from, to);
   } else if (cmd === "dict") {
     // 百度词典
-    console.log("baidu dict");
     baidu(query, from, to);
   }
 };
