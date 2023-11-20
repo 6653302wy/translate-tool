@@ -5,7 +5,7 @@
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
 
-const cmdIndex = 1; // 本地测试为1， 线上为0
+const cmdIndex = 0; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
 
 const binstr = cmdargs[cmdIndex + 1];
