@@ -38,7 +38,7 @@ const showResult = (result) => {
 
   const dictMeans = dict.word_result.simple_means.symbols[0];
 
-  let trans = isEn
+  let trans = dictMeans?.ph_en
     ? `英/${dictMeans?.ph_en}/ 美/${dictMeans?.ph_am}/` + "\n\n"
     : "";
   if (dictMeans.parts.length) {
@@ -81,6 +81,7 @@ const baidu = async (text, from, to) => {
   let token = await getToken();
   if (!token) return;
 
+  //   console.log("dcit: ", text, from, to);
   axios({
     method: "POST",
     url:

@@ -2,6 +2,7 @@
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
 
+const cmdIndex = 0; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
 // [
 //   "",
@@ -12,8 +13,8 @@ const cmdargs = process.argv;
 //   // "-t",
 //   // "zh",
 // ];
-const cmd = cmdargs[1]; // 'fy' | 'dict'
-console.log("cmdargs: ", cmdargs);
+const cmd = cmdargs[cmdIndex + 1]; // 'fy' | 'dict'
+// console.log("cmdargs: ", cmdargs);
 let query = "";
 
 const iszh = (str) => {
@@ -23,7 +24,7 @@ const iszh = (str) => {
 };
 
 const getInputQuery = () => {
-  let queryStart = 2;
+  let queryStart = cmdIndex + 2;
   // 翻译命令下，检查是否有 -f -t 等参数
   let paramIndex =
     cmd === "fy" ? cmdargs.indexOf("-f") || cmdargs.indexOf("-t") : -1;
