@@ -2,7 +2,7 @@
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
 
-const cmdIndex = 1; // 本地测试为1， 线上为0
+const cmdIndex = 0; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
 // [
 //   "",
@@ -14,7 +14,7 @@ const cmdargs = process.argv;
 //   // "zh",
 // ];
 const cmd = cmdargs[cmdIndex + 1]; // 'fy' | 'dict'
-// console.log("cmdargs: ", cmdargs);
+console.log("cmdargs: ", cmdargs);
 let query = "";
 
 const iszh = (str) => {
@@ -36,6 +36,7 @@ const getInputQuery = () => {
     console.log("warning: 无法识别要翻译的内容，请重新输入");
     return;
   }
+  console.log("query: ", query, queryStart);
   if (query.length > 2000) query = query.slice(0, 2000); // 不能超xx个字符
 };
 
