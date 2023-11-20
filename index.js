@@ -13,7 +13,7 @@ const cmdargs = process.argv;
 //   // "zh",
 // ];
 const cmd = cmdargs[1]; // 'fy' | 'dict'
-// console.log("cmdargs: ", cmdargs);
+console.log("cmdargs: ", cmdargs);
 let query = "";
 
 const iszh = (str) => {
