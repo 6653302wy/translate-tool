@@ -46,9 +46,10 @@ const showResult = (result) => {
       } else {
         // 源语言为中文
         item?.means?.forEach((mean) => {
+          console.log("mean: ", mean);
           if (mean?.means?.length) {
             trans +=
-              `${mean.text} ${mean.part} ${mean.means.join("; ")}` + "\n";
+              `${mean.text} ${mean.part} ${mean.means.join("; ")}` + "\n\n";
           }
         });
       }

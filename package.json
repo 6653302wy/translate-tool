@@ -13,8 +13,10 @@
   "author": "wanpp",
   "license": "ISC",
   "keywords": [
-    "命令行",
-    "翻译"
+    "翻译",
+    "词典",
+    "字典",
+    "命令行"
   ],
   "dependencies": {
     "axios": "^1.4.0",
