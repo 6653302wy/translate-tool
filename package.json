@@ -4,8 +4,8 @@
   "description": "a tranlate tool use in cli",
   "main": "index.js",
   "bin": {
-    "fy": "./bin/index.js",
-    "dict": ".bin/index.js"
+    "fy": "index.js",
+    "dict": "index.js"
   },
   "scripts": {
     "p": "git add . && git commit -m 'publish package' && npm version patch && npm publish && git push --all"
