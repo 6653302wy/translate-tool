@@ -6,6 +6,8 @@ const os = require("os");
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
 
+console.log("process.argv: ", process.argv);
+
 const cmdIndex = 0; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
 // ["", "D:\\tmp\\index\\fy", "hello"];
