@@ -6,8 +6,6 @@ const os = require("os");
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
 
-console.log("process.argv: ", process.argv);
-
 const cmdIndex = 0; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
 // ["", "D:\\tmp\\index\\fy", "hello"];
@@ -15,11 +13,10 @@ const cmdargs = process.argv;
 const iswin = os.platform() === "win32";
 let binstr = cmdargs[cmdIndex + 1];
 if (iswin) binstr = binstr.replace(/\\/g, "/");
-// console.log("binstr: ", binstr);
 
 const cmd =
   cmdIndex === 0 ? binstr.substring(binstr.lastIndexOf("/") + 1) : binstr; // 'fy' | 'dict'
-console.log("cmdargs: ", cmdargs, cmd);
+// console.log("cmdargs: ", cmdargs, cmd);
 
 const iszh = (str) => {
   return /[\u4e00-\u9fa5|\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5]/.test(
