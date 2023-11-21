@@ -8,7 +8,7 @@
     "dict": "./index.js"
   },
   "scripts": {
-    "p": "git add . && git commit -m 'publish package' && npm version patch && npm publish"
+    "p": "git add . && git commit -m 'publish package' && npm version patch && npm publish && git push --all"
   },
   "author": "wanpp",
   "license": "ISC",

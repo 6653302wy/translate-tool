@@ -81,7 +81,7 @@ const getTranslateStr = () => {
   //   `${appKey}${input}${salt}${curtime}Vh8UL4hyCMle9ULqX3YrV31t2CFG0H2w`
   // );
 
-  const { from, to } = checkLan();
+  const { from, to } = checkLan(query);
 
   if (cmd === "fy") {
     // 腾讯翻译
