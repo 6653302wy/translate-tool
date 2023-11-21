@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 // 👆使用 node 进行脚本的解释程序
+const os = require("os");
 
 const tencnet = require("./tencent");
 const baidu = require("./baidu");
@@ -8,9 +9,12 @@ const baidu = require("./baidu");
 const cmdIndex = 0; // 本地测试为1， 线上为0
 const cmdargs = process.argv;
 
+const iswin = os.platform() === "win32";
 const binstr = cmdargs[cmdIndex + 1];
 const cmd =
-  cmdIndex === 0 ? binstr.substring(binstr.lastIndexOf("/") + 1) : binstr; // 'fy' | 'dict'
+  cmdIndex === 0
+    ? binstr.substring(binstr.lastIndexOf(iswin ? "\\" : "/") + 1)
+    : binstr; // 'fy' | 'dict'
 // console.log("cmdargs: ", cmdargs);
 
 const iszh = (str) => {
